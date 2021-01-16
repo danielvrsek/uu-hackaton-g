@@ -59,7 +59,15 @@ function _getBarChart(headerText, valueLabel, data) {
 /*@@viewOff:helpers*/
 
 /*@@viewOn:customHelpers*/
+function getFirstNameFrequencyGraphData(employees) {
+  let counts = {};
 
+  employees.forEach(employee => {
+    counts[employee.name] = counts[employee.name] ? counts[employee.name] + 1 : 1;
+  });
+
+  return Object.entries(counts).map(([k, v]) => ({"label":k,"value":v})).sort((a,b) => b.value - a.value);  
+}
 /*@@viewOff:customHelpers*/
 
 async function main() {
@@ -70,6 +78,17 @@ async function main() {
   await _validateDtoIn(dtoIn, uuAppErrorMap);
 
   /*@@viewOn:sourceCode*/
+
+  // všech zaměstnanců
+  console.log(_getBarChart("Histogram jmen všech zaměstnanců", "Zaměstnanci", getFirstNameFrequencyGraphData(dtoIn)));
+  // žen
+  console.log(_getBarChart("Histogram jmen všech žen", "Zaměstnanci", getFirstNameFrequencyGraphData(dtoIn.filter(e => e.gender === "female"))));
+  // mužů
+  console.log(_getBarChart("Histogram jmen všech mužů", "Zaměstnanci", getFirstNameFrequencyGraphData(dtoIn.filter(e => e.gender === "male"))));
+  // žen na zkrácený úvazek (tj. 10, 20 či 30h/týdně)
+  console.log(_getBarChart("Histogram jmen všech žen na zkrácený úvazek", "Zaměstnanci", getFirstNameFrequencyGraphData(dtoIn.filter(e => e.gender === "female" && e.workload < 40))));
+  // mužů na plný pracovní úvazek (tj. 40h/týdně)
+  console.log(_getBarChart("Histogram jmen všech mužů na plný pracovní úvazek", "Zaměstnanci", getFirstNameFrequencyGraphData(dtoIn.filter(e => e.gender === "male" && e.workload === 40))));
 
   /*@@viewOff:sourceCode*/
 
