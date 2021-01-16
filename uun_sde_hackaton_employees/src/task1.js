@@ -85,10 +85,10 @@ async function main() {
   for (let i = 0; i < dtoIn.count; i++) {
     gendercode = _getRandom(0, 1);
     employees.push({
-      gender: gendercode == 0 ? "male" : "female",
+      gender: gendercode === 0 ? "male" : "female",
       birthdate: new Date(_getRandom(minDate, maxDate)),
-      name: gendercode == 0 ? MALE_FIRSTNAMES[_getRandom(0, MALE_FIRSTNAMES.length - 1)] : FEMALE_FIRSTNAMES[_getRandom(0, FEMALE_FIRSTNAMES.length - 1)],
-      surname: gendercode == 0 ? MALE_LASTNAMES[_getRandom(0, MALE_LASTNAMES.length - 1)] : FEMALE_LASTNAMES[_getRandom(0, FEMALE_LASTNAMES.length - 1)],
+      name: gendercode === 0 ? MALE_FIRSTNAMES[_getRandom(0, MALE_FIRSTNAMES.length - 1)] : FEMALE_FIRSTNAMES[_getRandom(0, FEMALE_FIRSTNAMES.length - 1)],
+      surname: gendercode === 0 ? MALE_LASTNAMES[_getRandom(0, MALE_LASTNAMES.length - 1)] : FEMALE_LASTNAMES[_getRandom(0, FEMALE_LASTNAMES.length - 1)],
       workload: _getRandom(1, 4) * 10
     });
   }
