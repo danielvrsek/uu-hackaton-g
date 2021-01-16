@@ -152,10 +152,10 @@ async function main() {
   * Spočítáme zbylé hodnoty a vypíšeme do konzole.
   */
   console.log(`Number of employees: ${empByAge.length}`);
-  console.log(`Sum of employees by workload 10hrs: ${workloadGrouped["10"].length || 0}`);
-  console.log(`Sum of employees by workload 20hrs: ${workloadGrouped["20"].length || 0}`);
-  console.log(`Sum of employees by workload 30hrs: ${workloadGrouped["30"].length || 0}`);
-  console.log(`Sum of employees by workload 40hrs: ${workloadGrouped["40"].length || 0}`);
+  console.log(`Sum of employees by workload 10hrs: ${(workloadGrouped["10"] || []).length}`);
+  console.log(`Sum of employees by workload 20hrs: ${(workloadGrouped["20"] || []).length}`);
+  console.log(`Sum of employees by workload 30hrs: ${(workloadGrouped["30"] || []).length}`);
+  console.log(`Sum of employees by workload 40hrs: ${(workloadGrouped["40"] || []).length}`);
   console.log(`Minimum age: ${ageMin} years`);
   console.log(`Maximum age: ${ageMax} years`);
   console.log(`Average age: ${(ageSum / empByAge.length).toFixed(1)} years`);
