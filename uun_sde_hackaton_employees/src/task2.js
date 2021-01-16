@@ -81,42 +81,33 @@ async function main() {
     return { uuAppErrorMap };
   }
 
-  let womenWorkloadSum = 0;
-  let womenCount = 0;
+  let empByAge = dtoIn.map(p => { return { ...p, age: getAge(new Date(p.birthdate)) }; }).sort((a, b) => a.age - b.age);
+  let ageMin = empByAge[0].age;
+  let ageMax = empByAge[empByAge.length - 1].age;
 
   let ageSum = 0;
-  let ageMin = Number.MAX_SAFE_INTEGER;
-  let ageMax = Number.MIN_SAFE_INTEGER;
+  let womenWorkloadSum = 0;
+  let womenCount = 0;
+  for (let i = 0; i < empByAge.length; i++) {
+    let emp = empByAge[i];
 
-  let arr = dtoIn.map(p => { return { ...p, age: getAge(new Date(p.birthdate)) }; });
-
-  for (let i = 0; i < dtoIn.length; i++) {
-    let person = arr[i];
-
-    ageSum += person.age;
-    if (person.gender === "female") {
+    ageSum += emp.age;
+    if (emp.gender === "female") {
       womenCount++;
-      womenWorkloadSum += person.workload;
-    }
-
-    if (ageMin > person.age) {
-      ageMin = person.age;
-    }
-    if (ageMax < person.age) {
-      ageMax = person.age;
+      womenWorkloadSum += emp.workload;
     }
   }
 
-  let ageMedian = calculateMedian(arr.map(x => x.age));
-  let workflowMedian = calculateMedian(arr.map(x => x.workload));
+  let ageMedian = calculateMedian(empByAge.map(x => x.age));
+  let workflowMedian = calculateMedian(empByAge.map(x => x.workload));
 
-  console.log(`Number of employees: ${arr.length}`);
+  console.log(`Number of employees: ${empByAge.length}`);
   console.log(`Minimum age: ${ageMin} years`);
   console.log(`Maximum age: ${ageMax} years`);
-  console.log(`Average age: ${(ageSum / arr.length).toFixed(1)} years`);
+  console.log(`Average age: ${(ageSum / empByAge.length).toFixed(1)} years`);
   console.log(`Median of age: ${ageMedian} years`)
   console.log(`Median of workload: ${workflowMedian} hrs`)
-  console.log("Overview by workload: " + arr.sort((a, b) => a.workload - b.workload).map(x => `${x.name} ${x.surname} - ${x.workload} hrs\n`));
+  console.log("Overview by workload: " + empByAge.sort((a, b) => a.workload - b.workload).map(x => `${x.name} ${x.surname} - ${x.workload} hrs\n`));
   console.log(`Average women workload: ${womenCount > 0 ? (womenWorkloadSum / womenCount).toFixed(1) : 0}`);
 
   /*@@viewOff:sourceCode*/
