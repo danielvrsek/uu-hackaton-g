@@ -70,6 +70,12 @@ async function main() {
   await _validateDtoIn(dtoIn, uuAppErrorMap);
 
   /*@@viewOn:sourceCode*/
+
+  if (dtoIn.age.min >= dtoIn.age.max) {
+    console.error("Invalid age requirements.");
+    return { uuAppErrorMap };
+  }
+
   const FEMALE_FIRSTNAMES = ["Marcela", "Petra", "Alice", "Helena", "Veronika", "Irena", "Olga", "Alena", "Marie", "Michaela", "Eva", "Jana", "Kristýna", "Lucie", "Lenka", "Jindra", "Vlasta", "Zdenka", "Dana", "Martina", "Věra", "Viera", "Marika", "Jaroslava", "Drahomíra", "Hana", "Anna", "Ludmila", "Barbora", "Jiřina", "Božena", "Diana", "Zdeňka", "Gabriela", "Dagmar", "Soňa", "Jitka", "Kateřina", "Zuzana", "Tereza", "Natálie", "Markéta", "Andrea", "Jarmila", "Daniela", "Vladimíra", "Dita", "Šárka", "Ivana", "Monika"];
   const MALE_FIRSTNAMES = ["Vlastimil", "Roman", "Ladislav", "Josef", "Jan", "Miroslav", "Tomáš", "Jaroslav", "Jiří", "Václav", "Oldřich", "Karel", "Petr", "Zdeněk", "Leonardus Franciscus", "František", "Milan", "Pavel", "Lukáš", "Radek", "Rolf Harri", "Martin", "Vlastislav", "Daniel", "Bohuslav", "Lubomír", "Illya", "Ivan", "Michal", "Vladimír", "Vojtěch", "David", "Patrik", "Jaromír", "Aleš", "Bohdan", "Stanislav", "Radislav", "Antonín", "Leoš", "Ondřej", "Jakub", "Marek", "Vittorio", "Arnošt", "Robert", "Vítězslav", "Radomír", "Richard", "Vladislav"];
   const FEMALE_LASTNAMES = ["Hubáčková", "Veselá", "Všetulová", "Šímová", "Beránková", "Jarolímková", "Šimková", "Kaňoková", "Horáková", "Gregárková", "Prchalová", "Blahová", "Melicharová", "Trutnovská", "Bulisová", "Lachmanová", "Kremlová", "Čejková", "Matušková", "Kolovecká", "Banasinská", "Kusáková", "Kitzbergerová", "Polívková", "Suchá", "Tomsová", "Šimáková", "Štěpánková", "Vlková", "Venclíčková", "Bartošová", "Ivanochko", "Kuzniková", "Bednaříková", "Gregorová", "Milerová", "Konečná", "Valešová", "Káčerková", "Culková", "Vebrová", "Rajmová", "Slaninová", "Kostomlatská", "Kašová", "Filipová", "Klodová", "Nováková", "Chrastinová", "Marková"];
