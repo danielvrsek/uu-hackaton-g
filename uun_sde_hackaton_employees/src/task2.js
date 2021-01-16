@@ -43,6 +43,28 @@ async function _validateDtoIn(dtoIn, uuAppErrorMap) {
 /*@@viewOff:helpers*/
 
 /*@@viewOn:customHelpers*/
+
+function getAge(birthDate) {
+  let today = new Date();
+  today.setFullYear(birthDate.getFullYear());
+
+  if (today > birthDate) {
+    return new Date().getFullYear() - birthDate.getFullYear();
+  }
+
+  return new Date().getFullYear() - birthDate.getFullYear() - 1;
+}
+
+function calculateMedian(arr) {
+  let middle = Math.floor(arr.length / 2);
+    arr = [...arr].sort((a, b) => a - b);
+    if (arr.length % 2 !== 0) {
+       return arr[middle];
+    } else {
+       return (arr[middle - 1] + arr[middle]) / 2;
+    }
+}
+
 /*@@viewOff:customHelpers*/
 
 async function main() {
@@ -53,27 +75,6 @@ async function main() {
   await _validateDtoIn(dtoIn, uuAppErrorMap);
 
   /*@@viewOn:sourceCode*/
-
-  function getAge(birthDate) {
-    let today = new Date();
-    today.setFullYear(birthDate.getFullYear());
-
-    if (today > birthDate) {
-      return new Date().getFullYear() - birthDate.getFullYear();
-    }
-
-    return new Date().getFullYear() - birthDate.getFullYear() - 1;
-  }
-
-  function calculateMedian(arr) {
-    let middle = Math.floor(arr.length / 2);
-      arr = [...arr].sort((a, b) => a - b);
-      if (arr.length % 2 !== 0) {
-         return arr[middle];
-      } else {
-         return (arr[middle - 1] + arr[middle]) / 2;
-      }
-  }
 
   if (dtoIn.length === 0) {
     console.error("There are no employees present.");
