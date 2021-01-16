@@ -91,9 +91,10 @@ async function main() {
   }
 
   employees.forEach(e => {
-    _getCard(e.name, e.surname, e.birthdate, e.gender);
+    console.log(_getCard(e.name, e.surname, e.birthdate, e.gender));
   });
 
+  console.log(_getData(employees));
 
   /*@@viewOff:sourceCode*/
 
