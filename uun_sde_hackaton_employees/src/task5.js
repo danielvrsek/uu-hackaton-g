@@ -57,6 +57,27 @@ function _getBirthdayCard(name, surname, date, age, gender) {
 /*@@viewOff:helpers*/
 
 /*@@viewOn:customHelpers*/
+
+/*
+* Tato metoda vypočítá na základě parametru a aktuálního datumu počet let.
+*/
+function getAge(birthDate) {
+  /*
+  * Do proměnné today uložíme aktuální měsíc a den v roce z parametru birthDate. 
+  * Tzn. pokud bude dnešní datum 2021-01-16 a datum v proměnné birthDate bude 2016-05-10, tak v proměnné today bude 2016-01-16
+  */ 
+  let today = new Date();
+  today.setFullYear(birthDate.getFullYear());
+
+  // Pokud je hodnota v proměnné today větší než v proměnné birthDate, tento datum již tento rok proběhl a vrátíme pouze rozdíl mezi rokem 2020 a 2016, tzn. 4.
+  if (today > birthDate) {
+    return new Date().getFullYear() - birthDate.getFullYear();
+  }
+
+  // Pokud je hodnota v proměnné today menší než v proměnné birthDate, tento datum tento rok ještě neproběhl a vrátíme rozdím mezi rokem 2020 a 2016 ponížený o 1, tzn. 3.
+  return new Date().getFullYear() - birthDate.getFullYear() - 1;
+}
+
 /*@@viewOff:customHelpers*/
 
 async function main() {
@@ -68,6 +89,11 @@ async function main() {
 
   /*@@viewOn:sourceCode*/
   
+  let today = new Date();
+  let employees = dtoIn.filter(x => new Date(x.birthdate).getMonth() == today.getMonth()).map(x => { return { ...x, age: getAge(new Date(x.birthdate))}; });
+
+  console.log("Employees that celebrate birthday this month: " + employees.map(x => `${x.name} ${x.surname}, age: ${x.age}\n`));
+
   /*@@viewOff:sourceCode*/
 
   return { uuAppErrorMap };
