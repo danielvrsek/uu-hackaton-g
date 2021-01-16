@@ -152,15 +152,15 @@ async function main() {
   * Spočítáme zbylé hodnoty a vypíšeme do konzole.
   */
   console.log(`Number of employees: ${empByAge.length}`);
-  console.log(`Sum of employees by workload 10hrs: ${workloadGrouped["10"]?.length ?? 0}`);
-  console.log(`Sum of employees by workload 20hrs: ${workloadGrouped["20"]?.length ?? 0}`);
-  console.log(`Sum of employees by workload 30hrs: ${workloadGrouped["30"]?.length ?? 0}`);
-  console.log(`Sum of employees by workload 40hrs: ${workloadGrouped["40"]?.length ?? 0}`);
+  console.log(`Sum of employees by workload 10hrs: ${workloadGrouped["10"].length || 0}`);
+  console.log(`Sum of employees by workload 20hrs: ${workloadGrouped["20"].length || 0}`);
+  console.log(`Sum of employees by workload 30hrs: ${workloadGrouped["30"].length || 0}`);
+  console.log(`Sum of employees by workload 40hrs: ${workloadGrouped["40"].length || 0}`);
   console.log(`Minimum age: ${ageMin} years`);
   console.log(`Maximum age: ${ageMax} years`);
   console.log(`Average age: ${(ageSum / empByAge.length).toFixed(1)} years`);
-  console.log(`Median of age: ${ageMedian} years`)
-  console.log(`Median of workload: ${workflowMedian} hrs`)
+  console.log(`Median of age: ${ageMedian} years`);
+  console.log(`Median of workload: ${workflowMedian} hrs`);
   console.log("Overview by workload: " + empByAge.sort((a, b) => a.workload - b.workload).map(x => `${x.name} ${x.surname} - ${x.workload} hrs\n`));
   console.log(`Average women workload: ${womenCount > 0 ? (womenWorkloadSum / womenCount).toFixed(1) : 0}`);
 
