@@ -75,26 +75,30 @@ async function main() {
   const FEMALE_LASTNAMES = ["Hubáčková", "Veselá", "Všetulová", "Šímová", "Beránková", "Jarolímková", "Šimková", "Kaňoková", "Horáková", "Gregárková", "Prchalová", "Blahová", "Melicharová", "Trutnovská", "Bulisová", "Lachmanová", "Kremlová", "Čejková", "Matušková", "Kolovecká", "Banasinská", "Kusáková", "Kitzbergerová", "Polívková", "Suchá", "Tomsová", "Šimáková", "Štěpánková", "Vlková", "Venclíčková", "Bartošová", "Ivanochko", "Kuzniková", "Bednaříková", "Gregorová", "Milerová", "Konečná", "Valešová", "Káčerková", "Culková", "Vebrová", "Rajmová", "Slaninová", "Kostomlatská", "Kašová", "Filipová", "Klodová", "Nováková", "Chrastinová", "Marková"];
   const MALE_LASTNAMES = ["Stránský", "Bílek", "Preuss", "Kolečář", "Štuchal", "Šindelář", "Kindl", "Novotný", "Mžourek", "Chrastina", "Všetečka", "Bajaja", "Srnec", "Chrt", "Crhonek", "Šnajdr", "Pawlas", "Macela", "Bičiště", "Kos", "Maksimov", "Poula", "Andrlík", "Handl", "Janoušek", "Hýbl", "Havel", "Tichý", "Přikryl", "Kučera", "Vaško", "Fuksa", "Šandera", "Diviš", "Sedlák", "Pavlů", "Suk", "Foks", "Wiedermann", "Zvelebil", "Stráňka", "Zadražil", "Maděra", "Rýdl", "Staník", "Batlička", "Pavel", "Burian", "Beran", "Malyjurek"];
 
-
   let employees = [];
+
+  var today = new Date();
+  let minDate = new Date().setFullYear(today.getFullYear() - dtoIn.age.min);
+  let maxDate = new Date().setFullYear(today.getFullYear() - dtoIn.age.max);
 
   let gendercode = 0;
   for (let i = 0; i < dtoIn.count; i++) {
     gendercode = _getRandom(0, 1);
     employees.push({
       gender: gendercode == 0 ? "male" : "female",
-      birthdate: 
+      birthdate: new Date(_getRandom(minDate, maxDate)),
       name: gendercode == 0 ? MALE_FIRSTNAMES[_getRandom(0, MALE_FIRSTNAMES.length - 1)] : FEMALE_FIRSTNAMES[_getRandom(0, FEMALE_FIRSTNAMES.length - 1)],
       surname: gendercode == 0 ? MALE_LASTNAMES[_getRandom(0, MALE_LASTNAMES.length - 1)] : FEMALE_LASTNAMES[_getRandom(0, FEMALE_LASTNAMES.length - 1)],
       workload: _getRandom(1, 4) * 10
     });
   }
-
+ 
   employees.forEach(e => {
     console.log(_getCard(e.name, e.surname, e.birthdate, e.gender));
   });
 
   console.log(_getData(employees));
+
 
   /*@@viewOff:sourceCode*/
 
