@@ -87,8 +87,12 @@ async function main() {
       name: gendercode == 0 ? MALE_FIRSTNAMES[_getRandom(0, MALE_FIRSTNAMES.length - 1)] : FEMALE_FIRSTNAMES[_getRandom(0, FEMALE_FIRSTNAMES.length - 1)],
       surname: gendercode == 0 ? MALE_LASTNAMES[_getRandom(0, MALE_LASTNAMES.length - 1)] : FEMALE_LASTNAMES[_getRandom(0, FEMALE_LASTNAMES.length - 1)],
       workload: _getRandom(1, 4) * 10
-    })
+    });
   }
+
+  employees.forEach(e => {
+    _getCard(e.name, e.surname, e.birthdate, e.gender);
+  });
 
 
   /*@@viewOff:sourceCode*/
