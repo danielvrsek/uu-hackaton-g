@@ -101,6 +101,16 @@ function _getBarChartStacked(headerText, data) {
 /*@@viewOff:helpers*/
 
 /*@@viewOn:customHelpers*/
+function getAge(employee) {
+    let today = new Date();
+    let birthDate = new Date(employee.birthdate);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    let m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
 /*@@viewOff:customHelpers*/
 
 async function main() {
@@ -112,6 +122,34 @@ async function main() {
 
   /*@@viewOn:sourceCode*/
 
+  // ********** rozložení pracovních úvazků formou koláčového grafu *****************
+  const dataPieChart = [
+    { label: "10h/týden", value: dtoIn.filter((employee) => employee.workload === 10).length },
+    { label: "20h/týden", value: dtoIn.filter((employee) => employee.workload === 20).length },
+    { label: "30h/týden", value: dtoIn.filter((employee) => employee.workload === 30).length },
+    { label: "40h/týden", value: dtoIn.filter((employee) => employee.workload === 40).length }
+  ];
+  console.log(_getPieChart("Rozložení pracovních úvazků", "Zaměstnanci", dataPieChart))
+
+  // *********** četnost věku všech mužů formou sloupcového grafu, *******************
+  let counts = {};
+
+  dtoIn.forEach(employee => {
+    let age = getAge(employee);
+    counts[age] = counts[age] ? counts[age] + 1 : 1;
+  });
+
+  const dataBarChart = Object.entries(counts).map(([k, v]) => ({"label":k,"value":v}));  
+  console.log(_getBarChart("Histogram věku mužů", "Zaměstnanci", dataBarChart));
+
+  // *********** četnost pracovních úvazků mužů a žen formou složeného sloupcového grafu. *****************
+  const dataBarChartStacked = [
+    { label: "10h/týden", valueMale: dtoIn.filter((e) => e.workload === 10 && e.gender === "male").length, valueFemale: dtoIn.filter((e) => e.workload === 10 && e.gender === "female").length },
+    { label: "20h/týden", valueMale: dtoIn.filter((e) => e.workload === 20 && e.gender === "male").length, valueFemale: dtoIn.filter((e) => e.workload === 20 && e.gender === "female").length },
+    { label: "30h/týden", valueMale: dtoIn.filter((e) => e.workload === 30 && e.gender === "male").length, valueFemale: dtoIn.filter((e) => e.workload === 30 && e.gender === "female").length },
+    { label: "40h/týden", valueMale: dtoIn.filter((e) => e.workload === 40 && e.gender === "male").length, valueFemale: dtoIn.filter((e) => e.workload === 40 && e.gender === "female").length }
+  ];
+  console.log(_getBarChartStacked("Histogram pracovních úvazků zaměstnanců dle pohlaví", dataBarChartStacked));
   /*@@viewOff:sourceCode*/
 
   return { uuAppErrorMap };
